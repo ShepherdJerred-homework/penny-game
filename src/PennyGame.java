@@ -4,6 +4,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -17,6 +18,8 @@ public class PennyGame {
         Scanner scanner = new Scanner(inputFile);
         String input = scanner.nextLine();
 
+        PrintWriter printWriter = new PrintWriter(outputFile);
+
         int numberOfGames = Integer.valueOf(input);
 
         for (int i = 0; i < numberOfGames; i++) {
@@ -24,7 +27,7 @@ public class PennyGame {
             HashMap<String, Integer> map = new HashMap<>();
 
             // TODO need to consider overlaps
-            for (int n = 0; n < NUMBER_OF_TOSSES_IN_ONE_GAME - 1; n++) {
+            for (int n = 0; n < NUMBER_OF_TOSSES_IN_ONE_GAME - 2; n++) {
                 String s = input.substring(n, n + 3).toUpperCase();
                 if (map.containsKey(s)) {
                     int x = map.get(s);
@@ -34,8 +37,6 @@ public class PennyGame {
                     map.put(s, 1);
                 }
             }
-
-            System.out.println(map);
 
             String output = String.format("%s %s %s %s %s %s %s %s",
                     map.getOrDefault("TTT", 0),
@@ -48,7 +49,10 @@ public class PennyGame {
                     map.getOrDefault("HHH", 0)
             );
 
+            printWriter.println(output);
             System.out.println(output);
         }
+
+        printWriter.close();
     }
 }
